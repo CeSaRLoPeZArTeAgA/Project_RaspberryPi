@@ -1,0 +1,11 @@
+CONFIGURACION DE LA TEMPERATURA DEL PROCESADOR, Y ACTIVACION DEL VENTILADOR 
+
+Entramos a la configuracion de la raspberry pi del archivo config.txt
+sudo nano /boot/config.txt
+
+en el archivo config.txt añadimos la linea
+dtoverlay=gpio-fan,gpiopin=18,temp=55000
+
+Nota:
+La temperatura 55000 es equivalente a 55°C
+
