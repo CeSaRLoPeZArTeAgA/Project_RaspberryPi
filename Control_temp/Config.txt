@@ -1,10 +1,13 @@
-CONFIGURACION DE LA TEMPERATURA DEL PROCESADOR, Y ACTIVACION DEL VENTILADOR 
+CONFIGURACION DE LA TEMPERATURA DEL PROCESADOR, Y ACTIVACION DEL VENTILADOR
+MODELO Argon MINI FAN 
 
 Entramos a la configuracion de la raspberry pi del archivo config.txt
-sudo nano /boot/config.txt
+sudo nano /boot/firmware/config.txt
 
 en el archivo config.txt añadimos la linea
 dtoverlay=gpio-fan,gpiopin=18,temp=55000
+
+Grabamos y salimos del archivo config.txt
 
 Nota:
 La temperatura 55000 es equivalente a 55°C

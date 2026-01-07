@@ -1,0 +1,14 @@
+Para revisar la temperatura solo como una imagen en un tiempo se usa el comando en terminal
+vcgencmd measure_temp
+
+Para revisar la temperatura en tiempo real se usa el comando en terminal, para salir es ctrl+c
+sudo watch -n1 vcgencmd measure_temp
+
+Para automatizar, se usa un script1.sh, el cual se debe dar permisos de ejecucion
+para permiso
+sudo chmod +x script
+
+ejecucion
+sudo ./script1.sh
+
+
