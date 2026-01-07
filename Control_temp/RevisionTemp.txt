@@ -11,4 +11,7 @@ sudo chmod +x script
 ejecucion
 sudo ./script1.sh
 
+si queremos usar un programa en python, se usara el programa temp.py
+python temp.py
+
 

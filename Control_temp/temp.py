@@ -1,0 +1,4 @@
+import os
+
+temp = os.popen("vcgencmd measure_temp").readline()
+print(temp)
