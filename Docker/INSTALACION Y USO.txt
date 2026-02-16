@@ -1,0 +1,142 @@
+######################################
+INSTALACION DE DOCKER
+
+[1] Actualizamos el sistema operativo
+sudo apt-get update
+sudo apt-get upgrade
+
+[2] Instalar Docker y Docker Compose: 
+sudo curl -fsSL https://get.docker.com/ -o get-docker.sh 
+sudo sh get-docker.sh 
+
+Consulta version de instalacion:
+docker compose version
+
+Opcional(otra forma de instalacion):
+sudo apt-install docker-compose-plugin
+
+Si en caso que quiera retirar el paquete antiguo usar:
+sudo apt autoremove
+
+Reinstalar ahora con:
+sudo apt-install docker-compose-plugin
+
+[3] Añadir nuestro usuario al grupo Docker(dar permiso al usuario de maenjo de docker ): 
+sudo usermod -aG docker ${USER} 
+
+[4] Reiniciar sistema: 
+sudo reboot 
+
+[5]Ejecutar un contenedor de prueba: 
+docker run hello-world
+
+#######################################
+MANEJO DE CONTENEDORES POR TERMINAL
+
+Visualizacion de contenedores en funcionamiento:
+docker ps
+
+Visualizacion de los contenedores instalados:
+docker imagen
+
+
+########################################
+MANEGADOR DE DOCKER - PORTAINER
+
+Fuente: https://docs.portainer.io/start/install-ce/server/docker/linux 
+[a] Crear volumen Docker que contendrá los datos gestionados por el servidor Portainer: 
+sudo docker volume create portainer_data 
+
+[b] Descargar e instalar contenedor Portainer: 
+sudo docker run -d -p 8000:8000 -p 9443:9443 --name portainer --restart=always --restart=always -v /var/run/docker.sock:/var/run/docker.sock -v portainer_data:/data portainer/portainer-ce:latest
+
+[c] Ver contenedores instalados: 
+sudo docker ps 
+
+[d] Acceso a Portainer:  
+https://[IP de tu Raspberry Pi]:9443 
+Ejemplo: https://192.168.1.10:9443 
+
+
+
+##########################################
+INSTALACION DE SERVIDOR APACHE
+
+[1] Usamos una imagen de hub.docker.com, buscamos httpd
+
+[2] Creamos la siguiente estructura de archivos
+
+    mi-proyecto/
+    │
+    ├── Dockerfile
+    └── public-html/
+        └── index.html
+
+  Se crea una carpeta public-html, en el cual se guardara los
+  archivos de la pagina web de prueba. Se crea el archivo Dockerfile
+  el cual contendra la version de la imagen a usar asi como la carpeta 
+  de los archivos a usar en la pagina.
+
+[3] El archivo Dockerfile tendra (de la pag hub.docker.com)
+
+FROM httpd:2.4.66-trixie
+COPY ./public-html/ /usr/local/apache2/htdocs/
+
+[4] El archivo index.html tendra:
+
+<!DOCTYPE html>
+<html>
+        <body>
+                <h1> Pagina de prueba CLA </h1>
+        </body>
+</html>
+
+[5] Para construir el contenedor a usar a travez de Dockerfile:
+
+docker build --rm -t pits/tet:0.0.1 -f Dockerfile .
+
+[6] Para correr el contenedor en primer plano se usara:
+
+docker run -p 8080:80 pits/tet:0.0.1
+
+[7] Para ver la pagina desde otra computadora, usar la IP 
+    de la raspberry pi
+    
+    http://192.168.0.133:8080/
+
+[7] Para correr el contenedor en segundo plano se usara:
+
+docker run -d -p 8080:80 pits/tet:0.0.1
+
+[8] Para ver los contenedores en uso, parados o fallados se usa:
+
+docker ps -a
+
+[9] Parar el contenedor que queremos:
+
+docker stop [id/nombre]
+
+[10] Para limpiar la lista de contenedores parados
+
+docker container prune
+
+[11] Para usar la imagen y correr varios contenedores a la vez
+     y cada uno corre una pagina
+
+docker run -d --name test1 -p 8080:80 pits/tet:0.0.1
+
+docker run -d --name test2 -p 8182:80 pits/tet:0.0.1
+
+[12] Para usar un solo contenedor y correr varias pagina a la vez
+
+Primer montaje
+op1:
+docker run --rm -d -v /home/cesarlopez/Docker/public-html/index.html:/usr/local/apache2/htdocs/index.html -p 8080:80 httpd:2.4.66-trixie
+op2:
+docker run --rm -d -p 8080:80 -v $(pwd)/index.html:/usr/local/apache2/htdocs/index.html httpd:2.4.66-trixie
+
+Segundo montaje:
+op1:
+docker run --rm -d -v /home/cesarlopez/Docker/public-html/index.html.2:/usr/local/apache2/htdocs/index.html -p 8181:80 httpd:2.4.66-trixie
+op2:
+docker run --rm -d -p 8181:80 -v $(pwd)/index.html.2:/usr/local/apache2/htdocs/index.html httpd:2.4.66-trixie
