@@ -1,0 +1,36 @@
+
+[1] Configuracion en el archivo de arranque config.txt
+    para ello tiene que grabar los camandos mas abajo.
+    Primero abrimos el archivo:
+    
+    sudo nano /boot/firmware/config.txt
+
+    Agregamos estas lineas, guardamos y reiniciamos el sistema operativo:
+    
+    # Apagar LED de actividad (verde)
+    dtparam=act_led_trigger=none
+    dtparam=act_led_activelow=off
+
+    # Apagar LED de alimentación (rojo)
+    dtparam=pwr_led_trigger=none
+    dtparam=pwr_led_activelow=off
+
+[2] Usando uns script .sh, para ello guardamos las siguientes
+    lineas en el archivo apagar_leds.sh :
+
+    #!/bin/bash
+
+    # Apagar LED de actividad
+    echo none | sudo tee /sys/class/leds/led0/trigger
+    echo 0 | sudo tee /sys/class/leds/led0/brightness
+
+    # Apagar LED de alimentación
+    echo none | sudo tee /sys/class/leds/led1/trigger
+    echo 0 | sudo tee /sys/class/leds/led1/brightness
+
+
+    Lo guardamos y le damos permisos:
+    chmod +x apagar_leds.sh
+
+    Para ejecutar se hara:
+    ./apagar_leds.sh
