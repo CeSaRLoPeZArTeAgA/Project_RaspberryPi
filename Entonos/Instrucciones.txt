@@ -1,0 +1,69 @@
+#############################################################
+[1] ENTORNO EN LINUX - SHELL  
+
+[a] MANEJO DE VERSION DE PYTHON
+python --VERSION
+
+[b] CREACION DE ENTORNO(ESTRUCTURA) - NOMBRE DEL ENTORNO SERA env
+python3 -m venv env
+
+env
+ ├─ bin
+ │   └─ activate
+ └─ lib
+
+[c] ACTIVACION DEL ENTORNO
+source env/bin/activate
+
+[d] DESACTIVACION DE ENTORNO
+deactivate
+
+[d] VERIFICACION DEL ENTORNO
+python --version
+which python
+
+#############################################################
+[2] ENTORNO EN WINDOWS - POWERSHELL
+
+[a] MANEJO DE VERSION DE PYTHON
+python --VERSION
+
+[b] CREACION DE ENTORNO(ESTRUCTURA) - NOMBRE DEL ENTORNO SERA env
+python3 -m venv env
+
+env
+ ├─ Scripts
+ │   ├─ Activate.ps1
+ │   ├─ activate.bat
+ │   └─ python.exe
+ └─ Lib
+
+[c] ACTIVACION DEL ENTORNO
+.\env\Scripts\Activate.ps1
+
+[d] DESACTIVACION DE ENTORNO
+deactivate
+
+################################################################
+[3] MANEJO DE ENTORNOS
+
+[A] SABER Q PAQUETES TENGO DISPONIBLE
+pip list
+
+[B] INSTALACION DE PAQUETES DENTRO DEL ENTORNO
+pip install pandas
+
+[C] EXPORTACION DE PIP (se genera fuera de la carpeta env)
+pit freeze > requirements.txt
+
+[D] INSTALACION DE PAQUETE EN OTRO ENTORNO CON ARCHIVO requirements.txt(previo tiene q crearse el nuevo entorno y levantarlo)
+pip install -r requirements.txt
+
+[E] EJECUCION DE UN ARCHIVO PYTHON DESDE LA SHELL EN UN ENTORNO
+python programa.py
+
+[F] EJECUCION DE UN ARCHIVO PYTHON DESDE VISUAL CODE EN UN ENTORNO
+Ctrl + Shift + P
+Python: Select Interpreter
+#elegir:
+env\Scripts\python.exe
