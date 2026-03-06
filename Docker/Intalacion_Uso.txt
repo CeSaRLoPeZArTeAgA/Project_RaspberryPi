@@ -36,9 +36,8 @@ MANEJO DE CONTENEDORES POR TERMINAL
 Visualizacion de contenedores en funcionamiento:
 docker ps
 
-Visualizacion de los contenedores instalados:
-docker imagen
-
+Visualizacion de los contenedores en funcionamiento y parados:
+docker ps -a
 
 ########################################
 MANEGADOR DE DOCKER - PORTAINER
@@ -102,14 +101,21 @@ docker build --rm -t pits/tet:0.0.1 -f Dockerfile .
 
 docker run -p 8080:80 pits/tet:0.0.1
 
-[7] Para ver la pagina desde otra computadora, usar la IP 
+[7] Para ver la pagina desde otra computadora en la misma red, usar la IP 
     de la raspberry pi
     
     http://192.168.0.133:8080/
 
-[7] Para correr el contenedor en segundo plano se usara:
+[7.1] Para correr el contenedor en segundo plano se usara:
 
 docker run -d -p 8080:80 pits/tet:0.0.1
+
+[7.2] Para correr el contenedor en segundo plano(usando el nombre de mi_apache) se usara:
+
+docker run -d -p 8080:80 --name mi_apache pits/tet:0.0.1
+
+Luego ver logs: 
+docker logs mi_apache
 
 [8] Para ver los contenedores en uso, parados o fallados se usa:
 
@@ -122,6 +128,10 @@ docker stop [id/nombre]
 [10] Para limpiar la lista de contenedores parados
 
 docker container prune
+
+[10.1] Borrar contenedor
+
+docker rm mi_apache
 
 [11] Para usar la imagen y correr varios contenedores a la vez
      y cada uno corre una pagina
