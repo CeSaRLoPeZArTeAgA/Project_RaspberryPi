@@ -1,0 +1,10 @@
+En la ruta siguiente se encuentra el archivo splash.png el cual es la imagen de arranque del SO:
+/usr/share/plymouth/themes/pix
+
+Modificar el archivo con el logo que quiere que se presente al inicio 
+del arranque del sistema operativo y reemplazarlo. En la carpeta Imagenes escoguer la imagen
+que mas adecuado sea para el arranque del SO:
+sudo cp ~/Desktop/splash.png /usr/share/plymouth/themes/pix/splash.png
+
+Al final para que el archivo haga haga cambios usar el comando:
+sudo plymouth-set-default-theme -R pix
